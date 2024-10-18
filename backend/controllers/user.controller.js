@@ -1,8 +1,6 @@
 import express from "express";
 import User from "../models/user.model.js";
 
-const router = express.Router();
-
 export const createUser = async (req, res) => {
 	const user = req.body; // user will send this data
 
