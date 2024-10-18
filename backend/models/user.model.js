@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
     timestamps: true, // keeps created and updated values
 });
 
+// Comparse plain text password
+userSchema.methods.matchPassword = function (enteredPassword) {
+    return enteredPassword === this.password;
+};
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

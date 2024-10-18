@@ -25,10 +25,30 @@ function App() {
     return <Signup />;
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(`Username: ${username}, Password: ${password}`);
-    // Add authentication logic here
+  
+    try {
+      const response = await fetch("http://localhost:5001/api/users/login", { // Use the login endpoint
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }), // Send username and password to login endpoint
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        console.log("Login successful", data);
+        setShowTodoPage(true); // Redirect to TodoPage on successful login
+      } else {
+        console.error("Login failed: ", data.message);
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
