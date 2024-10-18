@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../css/App.css';
 import TodoPage from './TodoPage';
 
@@ -7,18 +8,44 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showTodoPage, setShowTodoPage] = useState(false);
+  const [error, setError] = useState('');
 
   const handleNavigateToTodo = () => {
     setShowTodoPage(true);
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      console.log(`Username: ${username}, Password: ${password}`);
-      // Add signup logic here
-    } else {
-      alert("Passwords do not match. Please try again.");
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match. Please try again.");
+      return;
+    }
+
+    try {
+      const response = await axios.post('/api/users', {
+        username,
+        password
+      });
+
+      if (response.data.success) {
+        console.log('Signup successful:', response.data);
+        // Do later: 
+        // automatically log the user in here or redirect them to a login page
+
+        alert('Signup successful! Please log in.');
+        
+        // Reset form fields
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+      } else {
+        setError('Signup failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      setError(error.response?.data?.message || 'An error occurred during signup. Please try again.');
     }
   };
 
@@ -62,6 +89,7 @@ function Signup() {
                 required
               />
             </div>
+            {error && <p className="error-message">{error}</p>}
             <button type="submit">Sign Up</button>
             <button className="debug-todo-btn" onClick={handleNavigateToTodo}>Go to To-Do Page (Debug)</button>
           </form>
