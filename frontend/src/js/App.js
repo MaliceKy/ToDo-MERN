@@ -79,7 +79,6 @@ function App() {
             </div>
             <button type="submit">Login</button>
             <button className="signup-btn" onClick={handleNavigateToSignup}>Sign Up</button>
-            <button className="debug-todo-btn"onClick={handleNavigateToTodo}>Go to To-Do Page (Debug)</button>
           </form>
         </div>
       </header>

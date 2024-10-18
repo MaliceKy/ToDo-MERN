@@ -92,7 +92,6 @@ function Signup() {
             </div>
             {error && <p className="error-message">{error}</p>}
             <button type="submit">Sign Up</button>
-            <button className="debug-todo-btn" onClick={handleNavigateToTodo}>Go to To-Do Page (Debug)</button>
           </form>
         </div>
       </header>
