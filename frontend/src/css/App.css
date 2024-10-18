@@ -72,7 +72,7 @@ input[type="password"] {
 
 button {
   padding: 10px;
-  background-color: #ff8000;
+  background-color: #e97400;
   color: white;
   border: none;
   border-radius: 4px;
@@ -82,7 +82,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(214, 128, 0);
+  background-color: rgb(255, 153, 0);
 }
 
 .debug-todo-btn{

@@ -33,7 +33,7 @@ const TodoPage = () => {
           onChange={(e) => setTask(e.target.value)}
         />
         <button onClick={handleAddTask}>Add Task</button>
-        <button onClick={handleNavigateToSignIn}>Go to Signin Page (Debug)</button>
+        <button onClick={handleNavigateToSignIn}>Go to Sign in Page (Debug)</button>
       </div>
       <ul className="todo-list">
         {tasks.map((t, index) => (

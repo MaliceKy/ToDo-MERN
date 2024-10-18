@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/App.css';
 import TodoPage from './TodoPage';
-import Signup from './Singup';
+import Signup from './Signup';
 
 function App() {
   const [username, setUsername] = useState('');
