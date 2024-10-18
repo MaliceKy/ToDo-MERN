@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     }
 },
 {
-    timestamps: true // keeps created and updated values
+    timestamps: true, // keeps created and updated values
 });
 
 const User = mongoose.model('User', userSchema);
