@@ -9,22 +9,15 @@ function App() {
   const [showTodoPage, setShowTodoPage] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [tasks, setTasks] = useState([]); // Store fetched todos
 
   const handleNavigateToSignup = () => {
     setShowSignupPage(true);
   };
 
-  if (showTodoPage) {
-    return <TodoPage userId={userId} />;
-  }
-
-  if (showSignupPage) {
-    return <Signup />;
-  }
-
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch("http://localhost:5001/api/users/login", {
         method: "POST",
@@ -33,11 +26,12 @@ function App() {
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
         setUserId(data.data._id);
+        setTasks(data.data.todos); // Set tasks from the login response
         setShowTodoPage(true);
       } else {
         console.error("Login failed: ", data.message);
@@ -48,11 +42,19 @@ function App() {
     }
   };
 
+  if (showTodoPage) {
+    return <TodoPage userId={userId} initialTasks={tasks} />; // Pass tasks as initialTasks
+  }
+
+  if (showSignupPage) {
+    return <Signup />;
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <h2>Login</h2>
-        <div className = "login-user-pass-container">
+        <div className="login-user-pass-container">
           <form onSubmit={handleLogin}>
             <div>
               <label htmlFor="username">Username:</label>

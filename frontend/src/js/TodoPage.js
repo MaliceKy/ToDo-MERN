@@ -3,28 +3,29 @@ import '../css/TodoPage.css';
 import App from './App.js';
 import axios from 'axios';
 
-const TodoPage = ({ userId }) => {
+const TodoPage = ({ userId, initialTasks }) => {
   const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(initialTasks); // Initialize with initialTasks
   const [showSignIn, setShowSignIn] = useState(false);
 
-  // Fetch existing to-dos when the component mounts
   useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5001/api/users/${userId}/todos`);
-        if (response.data.success) {
-          setTasks(response.data.todos);
+    // Fetch todos only if initialTasks is empty
+    if (tasks.length === 0) {
+      const fetchTodos = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5001/api/users/${userId}/todos`);
+          if (response.data.success) {
+            setTasks(response.data.todos);
+          }
+        } catch (error) {
+          console.error("Error fetching todos:", error);
         }
-      } catch (error) {
-        console.error("Error fetching todos:", error);
-      }
-    };
+      };
 
-    fetchTodos();
-  }, [userId]);
+      fetchTodos();
+    }
+  }, [userId, tasks]);
 
-  // Handle adding a new task
   const handleAddTask = async () => {
     if (task.trim()) {
       try {
@@ -41,7 +42,7 @@ const TodoPage = ({ userId }) => {
         );
   
         if (response.data.success) {
-          setTasks(response.data.todos); // Update the tasks with the new list
+          setTasks(response.data.todos);
           setTask('');
         } else {
           alert('Failed to add task.');
