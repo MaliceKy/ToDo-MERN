@@ -10,10 +10,6 @@ function Signup() {
   const [showTodoPage, setShowTodoPage] = useState(false);
   const [error, setError] = useState('');
 
-  const handleNavigateToTodo = () => {
-    setShowTodoPage(true);
-  };
-
   const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
