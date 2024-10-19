@@ -72,7 +72,6 @@ const TodoPage = ({ userId, initialTasks }) => {
           onChange={(e) => setTask(e.target.value)}
         />
         <button onClick={handleAddTask}>Add Task</button>
-        <button onClick={handleNavigateToSignIn}>Go to Sign in Page (Debug)</button>
       </div>
       <ul className="todo-list">
         {tasks.map((t, index) => (
