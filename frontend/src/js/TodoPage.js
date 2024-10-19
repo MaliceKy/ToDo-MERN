@@ -53,8 +53,26 @@ const TodoPage = ({ userId, initialTasks }) => {
     }
   };  
 
-  const handleNavigateToSignIn = () => {
-    setShowSignIn(true);
+  const handleDeleteTask = async (todo) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5001/api/users/delete-todo',
+        { userId: userId, todo: todo },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+  
+      if (response.data.success) {
+        setTasks(response.data.todos);
+      } else {
+        alert('Failed to delete task.');
+      }
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
   };
 
   if (showSignIn) {
@@ -75,7 +93,10 @@ const TodoPage = ({ userId, initialTasks }) => {
       </div>
       <ul className="todo-list">
         {tasks.map((t, index) => (
-          <li key={index}>&bull; {t}</li>
+          <li key={index}>
+            &bull; {t}
+            <button onClick={() => handleDeleteTask(t)} className="delete-button">Delete</button>
+          </li>
         ))}
       </ul>
     </div>

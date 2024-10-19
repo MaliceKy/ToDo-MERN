@@ -87,3 +87,29 @@ export const getTodos = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+// Delete a to-do for a user
+export const deleteTodo = async (req, res) => {
+    const { userId, todo } = req.body;
+
+    if (!userId || !todo) {
+        return res.status(400).json({ success: false, message: "User ID and to-do item are required." });
+    }
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+
+        // Filter out the specified todo
+        user.todos = user.todos.filter(t => t !== todo);
+        await user.save();
+
+        res.status(200).json({ success: true, todos: user.todos });
+    } catch (error) {
+        console.error("Error deleting to-do:", error.message);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
