@@ -113,3 +113,36 @@ export const deleteTodo = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+// Edit a to-do for a user
+export const editTodo = async (req, res) => {
+    const { userId, oldTodo, newTodo } = req.body;
+
+    if (!userId || !oldTodo || !newTodo) {
+        return res.status(400).json({ success: false, message: "User ID, old to-do, and new to-do are required." });
+    }
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+
+        // Find the index of the oldTodo
+        const todoIndex = user.todos.indexOf(oldTodo);
+
+        if (todoIndex === -1) {
+            return res.status(404).json({ success: false, message: "To-do not found." });
+        }
+
+        // Update the todo at the found index
+        user.todos[todoIndex] = newTodo;
+        await user.save();
+
+        res.status(200).json({ success: true, todos: user.todos });
+    } catch (error) {
+        console.error("Error editing to-do:", error.message);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};

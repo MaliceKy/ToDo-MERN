@@ -74,4 +74,39 @@
   .delete-button:hover {
     background-color: darkred;
   }
+
+  .edit-button, .save-button, .cancel-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    color: white;
+    background-color: blue;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .save-button {
+    background-color: green;
+  }
+  
+  .cancel-button {
+    background-color: gray;
+  }
+  
+  .edit-button:hover {
+    background-color: darkblue;
+  }
+  
+  .save-button:hover {
+    background-color: darkgreen;
+  }
+  
+  .cancel-button:hover {
+    background-color: darkgray;
+  }
+  
+  .edit-input {
+    margin-left: 10px;
+    padding: 5px;
+  }  
   

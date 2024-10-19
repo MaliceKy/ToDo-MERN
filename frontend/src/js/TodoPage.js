@@ -7,6 +7,9 @@ const TodoPage = ({ userId, initialTasks }) => {
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState(initialTasks); // Initialize with initialTasks
   const [showSignIn, setShowSignIn] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [newTask, setNewTask] = useState('');
+
 
   useEffect(() => {
     // Fetch todos only if initialTasks is empty
@@ -75,6 +78,33 @@ const TodoPage = ({ userId, initialTasks }) => {
     }
   };
 
+  const handleEditTask = async (oldTodo) => {
+    if (newTask.trim()) {
+      try {
+        const response = await axios.post(
+          'http://localhost:5001/api/users/edit-todo',
+          { userId: userId, oldTodo: oldTodo, newTodo: newTask },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
+  
+        if (response.data.success) {
+          setTasks(response.data.todos);
+          setEditIndex(null);
+          setNewTask('');
+        } else {
+          alert('Failed to edit task.');
+        }
+      } catch (error) {
+        console.error('Error editing task:', error);
+      }
+    }
+  };
+  
+
   if (showSignIn) {
     return <App />;
   }
@@ -95,7 +125,23 @@ const TodoPage = ({ userId, initialTasks }) => {
         {tasks.map((t, index) => (
           <li key={index}>
             &bull; {t}
-            <button onClick={() => handleDeleteTask(t)} className="delete-button">Delete</button>
+            {editIndex === index ? (
+              <>
+                <input 
+                  type="text" 
+                  value={newTask} 
+                  onChange={(e) => setNewTask(e.target.value)} 
+                  className="edit-input"
+                />
+                <button onClick={() => handleEditTask(t)} className="save-button">Save</button>
+                <button onClick={() => setEditIndex(null)} className="cancel-button">Cancel</button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => { setEditIndex(index); setNewTask(t); }} className="edit-button">Edit</button>
+                <button onClick={() => handleDeleteTask(t)} className="delete-button">Delete</button>
+              </>
+            )}
           </li>
         ))}
       </ul>
