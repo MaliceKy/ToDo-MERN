@@ -1,4 +1,3 @@
-import express from "express";
 import User from "../models/user.model.js";
 
 // Sign up (creation of user)
@@ -42,3 +41,49 @@ export const loginUser = async (req, res) => {
 	  res.status(500).json({ success: false, message: "Server error" });
 	}
   };
+
+  // Add a new to-do for a user
+export const addTodo = async (req, res) => {
+    const { userId, todo } = req.body;
+
+    console.log("Received data:", req.body); // Log the request body
+
+    if (!userId || !todo) {
+        return res.status(400).json({ success: false, message: "User ID and to-do item are required." });
+    }
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+
+        user.todos.push(todo);
+        await user.save();
+
+        res.status(200).json({ success: true, todos: user.todos });
+    } catch (error) {
+        console.error("Error adding to-do:", error.message);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};
+
+
+// Get all to-dos for a user
+export const getTodos = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+
+        res.status(200).json({ success: true, todos: user.todos });
+    } catch (error) {
+        console.error("Error fetching todos:", error.message);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};

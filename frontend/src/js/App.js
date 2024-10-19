@@ -8,17 +8,14 @@ function App() {
   const [password, setPassword] = useState('');
   const [showTodoPage, setShowTodoPage] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
-
-  const handleNavigateToTodo = () => {
-    setShowTodoPage(true);
-  };
+  const [userId, setUserId] = useState(null);
 
   const handleNavigateToSignup = () => {
     setShowSignupPage(true);
   };
 
   if (showTodoPage) {
-    return <TodoPage />;
+    return <TodoPage userId={userId} />;
   }
 
   if (showSignupPage) {
@@ -29,19 +26,19 @@ function App() {
     e.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:5001/api/users/login", { // Use the login endpoint
+      const response = await fetch("http://localhost:5001/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }), // Send username and password to login endpoint
+        body: JSON.stringify({ username, password }),
       });
   
       const data = await response.json();
   
       if (data.success) {
-        console.log("Login successful", data);
-        setShowTodoPage(true); // Redirect to TodoPage on successful login
+        setUserId(data.data._id);
+        setShowTodoPage(true);
       } else {
         console.error("Login failed: ", data.message);
         alert(data.message);
