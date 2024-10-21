@@ -13,12 +13,20 @@ export const createUser = async (req, res) => {
 
     // Attempt to create an instance of the new user in the database
 	try {
-		await newUser.save();
-		res.status(201).json({ success: true, data: newUser });
-	} catch (error) {
-		console.error("Error in creating user:", error.message);
+        // Check if username already exists
+        const existingUser = await User.findOne({ username: user.username });
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: "Username already exists. Please choose another one." });
+        }
+
+        // If username is unique, create the new user
+        const newUser = new User(user);
+        await newUser.save();
+        res.status(201).json({ success: true, data: newUser });
+    } catch (error) {
+        console.error("Error in creating user:", error.message);
         res.status(500).json({ success: false, message: "Server error" });
-	}
+    }
 };
 
 // Sign in (checks user)

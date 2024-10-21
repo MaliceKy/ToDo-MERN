@@ -89,7 +89,7 @@ function Signup() {
                 required
               />
             </div>
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className="form-user-pass-label">{error}</p>}
             <button type="submit">Sign Up</button>
           </form>
         </div>
