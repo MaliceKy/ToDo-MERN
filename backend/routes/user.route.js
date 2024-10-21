@@ -10,5 +10,6 @@ router.post("/add-todo", addTodo);
 router.get("/:userId/todos", getTodos);
 router.post("/delete-todo", deleteTodo);
 router.post("/edit-todo", editTodo);
+router.get("/test",(req,res,next)=>res.send("it worked"));
 
 export default router;
