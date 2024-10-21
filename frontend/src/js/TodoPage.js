@@ -17,6 +17,7 @@ const TodoPage = ({ userId, initialTasks }) => {
       const fetchTodos = async () => {
         try {
           const response = await axios.get(`http://localhost:5001/api/users/${userId}/todos`);
+          //const response = await axios.get('/api/users/${userId}/todos');
           if (response.data.success) {
             setTasks(response.data.todos);
           }
@@ -33,6 +34,7 @@ const TodoPage = ({ userId, initialTasks }) => {
     if (task.trim()) {
       try {
         const response = await axios.post('http://localhost:5001/api/users/add-todo', 
+        // const response = await axios.post('/api/users/add-todo', 
           {
             userId: userId, 
             todo: task 
@@ -58,8 +60,8 @@ const TodoPage = ({ userId, initialTasks }) => {
 
   const handleDeleteTask = async (todo) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5001/api/users/delete-todo',
+      const response = await axios.post('http://localhost:5001/api/users/delete-todo',
+      // const response = await axios.post('/api/users/delete-todo',
         { userId: userId, todo: todo },
         {
           headers: {
@@ -81,8 +83,8 @@ const TodoPage = ({ userId, initialTasks }) => {
   const handleEditTask = async (oldTodo) => {
     if (newTask.trim()) {
       try {
-        const response = await axios.post(
-          'http://localhost:5001/api/users/edit-todo',
+        const response = await axios.post('http://localhost:5001/api/users/edit-todo',
+        // const response = await axios.post('/api/users/edit-todo',
           { userId: userId, oldTodo: oldTodo, newTodo: newTask },
           {
             headers: {
