@@ -1,11 +1,11 @@
 {
   "name": "todo2",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon backend/server.js"
-  },
+  "main": "backend/server.js",
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "server": "nodemon server.js"
+},
   "type": "module",
   "keywords": [],
   "author": "",

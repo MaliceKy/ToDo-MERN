@@ -20,16 +20,14 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/api/users', {      
-      //const response = await axios.post('/api/users', {
+      //const response = await axios.post('http://localhost:5001/api/users', {      
+      const response = await axios.post('/api/users', {
         username,
         password
       });
 
       if (response.data.success) {
         console.log('Signup successful:', response.data);
-        // Do later: 
-        // automatically log the user in here or redirect them to a login page
 
         alert('Signup successful! Please log in.');
         
