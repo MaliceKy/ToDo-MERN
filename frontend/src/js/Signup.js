@@ -21,7 +21,7 @@ function Signup() {
 
     try {
       //const response = await axios.post('http://localhost:5001/api/users', {      
-      const response = await axios.post('/api/users', {
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/login`, {
         username,
         password
       });
