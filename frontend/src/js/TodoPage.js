@@ -124,7 +124,6 @@ const TodoPage = ({ userId, initialTasks }) => {
       <ul className="todo-list">
         {tasks.map((t, index) => (
           <li key={index}>
-            &bull; {t}
             {editIndex === index ? (
               <>
                 <input 
@@ -133,13 +132,20 @@ const TodoPage = ({ userId, initialTasks }) => {
                   onChange={(e) => setNewTask(e.target.value)} 
                   className="edit-input"
                 />
-                <button onClick={() => handleEditTask(t)} className="save-button">Save</button>
-                <button onClick={() => setEditIndex(null)} className="cancel-button">Cancel</button>
+                <div className="button-group">
+                  <button onClick={() => handleEditTask(t)} className="save-button">Save</button>
+                  <button onClick={() => setEditIndex(null)} className="cancel-button">Cancel</button>
+                </div>
               </>
             ) : (
               <>
-                <button onClick={() => { setEditIndex(index); setNewTask(t); }} className="edit-button">Edit</button>
-                <button onClick={() => handleDeleteTask(t)} className="delete-button">Delete</button>
+                <div className="task-content">
+                  <span className="task-text">&bull; {t}</span>
+                </div>
+                <div className="button-group">
+                  <button onClick={() => { setEditIndex(index); setNewTask(t); }} className="edit-button">Edit</button>
+                  <button onClick={() => handleDeleteTask(t)} className="delete-button">Delete</button>
+                </div>
               </>
             )}
           </li>
