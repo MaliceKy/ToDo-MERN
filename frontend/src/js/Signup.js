@@ -38,7 +38,7 @@ function Signup() {
         setConfirmPassword('');
 
         // Redirect to login page
-        window.location.href = '/login';
+        window.location.replace('/');
       } else {
         setError('Signup failed. Please try again.');
       }
