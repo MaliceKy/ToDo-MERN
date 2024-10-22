@@ -20,23 +20,24 @@ function Signup() {
     }
 
     try {
-      //const response = await axios.post('http://localhost:5001/api/users', {      
-        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/login`, {
+      const apiUrl = "https://todo-mern-production-be0c.up.railway.app";
+
+      // Correct Axios POST request
+      const response = await axios.post(`${apiUrl}/api/users`, {
         username,
         password
       });
 
       if (response.data.success) {
         console.log('Signup successful:', response.data);
-
         alert('Signup successful! Please log in.');
-        
+
         // Reset form fields
         setUsername('');
         setPassword('');
         setConfirmPassword('');
 
-        // Redirects to login page
+        // Redirect to login page
         window.location.href = '/login';
       } else {
         setError('Signup failed. Please try again.');
@@ -58,7 +59,7 @@ function Signup() {
         <div className="login-user-pass-container">
           <form onSubmit={handleSignup}>
             <div>
-              <label htmlFor="username" className="form-user-pass-label" >Username:</label>
+              <label htmlFor="username" className="form-user-pass-label">Username:</label>
               <input
                 type="text"
                 id="username"
@@ -68,7 +69,7 @@ function Signup() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="form-user-pass-label" >Password:</label>
+              <label htmlFor="password" className="form-user-pass-label">Password:</label>
               <input
                 type="password"
                 id="password"
@@ -78,7 +79,7 @@ function Signup() {
               />
             </div>
             <div>
-            <label htmlFor="confirmPassword" className="form-user-pass-label" >Confirm Password:</label>
+              <label htmlFor="confirmPassword" className="form-user-pass-label">Confirm Password:</label>
               <input
                 type="password"
                 id="confirmPassword"

@@ -18,36 +18,30 @@ function App() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
-      console.log('here')
-      //const response = await fetch("http://localhost:5001/api/users/login", {
-      const tryit="https://todo-mern-production-be0c.up.railway.app"
-      //const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/login`, {
-      
+      const tryit = "https://todo-mern-production-be0c.up.railway.app";
+  
+      // Correct Axios POST request
       const response = await axios.post(`${tryit}/api/users/login`, {
-      
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
+        username,
+        password
       });
-      console.log(response);
-      const data = await response.json();
-      console.log(data);
-      if (data.success) {
-        setUserId(data.data._id);
-        setTasks(data.data.todos); // Set tasks from the login response
+  
+      if (response.data.success) {
+        setUserId(response.data.data._id);
+        setTasks(response.data.data.todos); // Set tasks from the login response
         setShowTodoPage(true);
       } else {
-        console.error("Login failed: ", data.message);
-        alert(data.message);
+        console.error("Login failed: ", response.data.message);
+        alert(response.data.message);
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during login:", error.message);
+      alert("Login failed. Please check your credentials and try again.");
     }
   };
+  
 
   if (showTodoPage) {
     return <TodoPage userId={userId} initialTasks={tasks} />; // Pass tasks as initialTasks
