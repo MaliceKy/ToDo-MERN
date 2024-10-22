@@ -20,7 +20,7 @@ function Signup() {
     }
 
     try {
-      const apiUrl = "https://todo-mern-production-be0c.up.railway.app";
+      const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
       // Correct Axios POST request
       const response = await axios.post(`${apiUrl}/api/users`, {

@@ -20,10 +20,10 @@ function App() {
     e.preventDefault();
   
     try {
-      const tryit = "https://todo-mern-production-be0c.up.railway.app";
+      const apiUrl = process.env.REACT_APP_API_BASE_URL;
   
       // Correct Axios POST request
-      const response = await axios.post(`${tryit}/api/users/login`, {
+      const response = await axios.post(`${apiUrl}/api/users/login`, {
         username,
         password
       });
