@@ -22,7 +22,6 @@ function Signup() {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-      // Correct Axios POST request
       const response = await axios.post(`${apiUrl}/api/users`, {
         username,
         password
@@ -32,12 +31,10 @@ function Signup() {
         console.log('Signup successful:', response.data);
         alert('Signup successful! Please log in.');
 
-        // Reset form fields
         setUsername('');
         setPassword('');
         setConfirmPassword('');
 
-        // Redirect to login page
         window.location.replace('/');
       } else {
         setError('Signup failed. Please try again.');

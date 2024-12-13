@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
     id: {
@@ -7,11 +8,11 @@ const userSchema = new mongoose.Schema({
         default: uuidv4,
         unique: true
     },
-    username:{
+    username: {
         type: String,
         required: true
     },
-    password:{
+    password: {
         type: String,
         required: true
     },
@@ -19,14 +20,22 @@ const userSchema = new mongoose.Schema({
         type: [String],
         default: []
     }
-},
-{
-    timestamps: true, // keeps created and updated values
+}, {
+    timestamps: true,
 });
 
-// Comparse plain text password
-userSchema.methods.matchPassword = function (enteredPassword) {
-    return enteredPassword === this.password;
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Compare hashed password
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
