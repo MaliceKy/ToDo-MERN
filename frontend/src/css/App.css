@@ -52,12 +52,3 @@ button {
 button:hover {
   background-color: rgb(255, 153, 0);
 }
-
-.debug-todo-btn{
-  margin-top: 15px;
-}
-
-.form-user-pass-label{
-  font-size: 18px;
-  font-weight: bold;
-}
