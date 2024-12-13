@@ -1,54 +1,90 @@
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+:root {
+  --background-color: #1e1e1e;
+  --text-color: #f4f4f9;
+  --header-color: #ddd;
+  --input-border-color: #555;
+  --input-focus-border-color: #66b2ff;
+  --button-background-color: #0056b3;
+  --button-hover-background-color: #003d7a;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  color: white;
+  align-items: center;
+  height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.login-user-pass-container{
-  background-color: rgba(128, 128, 128, 0.216);
-  border-radius: 25px;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-  margin-bottom: 30vh;
+.App {
+  text-align: center;
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  width: 90%;
+  max-width: 400px;
 }
 
-form {
+.App-header {
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--header-color);
+}
+
+.login-user-pass-container {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
 
-form div {
-  margin-bottom: 15px;
+.form-user-pass-label {
+  font-size: 16px;
+  margin-bottom: 10px;
   text-align: left;
+  color: var(--text-color);
+  font-weight: bold;
 }
 
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 8px;
-  margin: 5px 0;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 16px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #333;
+  color: var(--text-color);
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: var(--input-focus-border-color);
+  outline: none;
 }
 
 button {
-  padding: 10px;
-  background-color: #e97400;
+  padding: 12px;
+  background-color: var(--button-background-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 10px;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: rgb(255, 153, 0);
+  background-color: var(--button-hover-background-color);
 }

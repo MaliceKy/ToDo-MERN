@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/App.css';
 import axios from 'axios';
+import { setEncodedPasswordCookie } from './utils/setCookie';
 
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userId, setUserId] = useState(null);
+
+  // Base64 encoded username for CTF
+  const encodedUsername = "VXNlcjpEaWRkeQ=="; // "User:Diddy"
+
+  useEffect(() => {
+    // Set the encoded password in cookies using the utility function
+    setEncodedPasswordCookie();
+
+    // Log a hint to the console for participants
+    console.log("Hint: Check your browser's cookies for more clues.");
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,7 +32,7 @@ function App() {
 
       if (response.data.success) {
         setUserId(response.data.data._id);
-        alert('Login successful!');
+        alert(response.data.flag || 'CTF{default_flag}'); // Display the flag from the backend or a default message
       } else {
         console.error("Login failed: ", response.data.message);
         alert(response.data.message);
@@ -59,6 +71,8 @@ function App() {
             </div>
             <button type="submit">Login</button>
           </form>
+          {/* Hint for finding the password */}
+          <p style={{ fontSize: '12px', color: '#888' }}>Hint: Check the code and cookies for hidden messages.</p>
         </div>
       </header>
     </div>
