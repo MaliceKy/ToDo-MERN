@@ -9,7 +9,7 @@ function App() {
   const [userId, setUserId] = useState(null);
 
   // Base64 encoded username for CTF
-  const encodedUsername = "VXNlcjpEaWRkeQ=="; // "User:Diddy"
+  const encodedUsername = "VXNlcjpEaWRkeQ==";
 
   useEffect(() => {
     // Set the encoded password in cookies using the utility function
@@ -30,9 +30,11 @@ function App() {
         password
       });
 
+      console.log('Login response:', response.data);
+
       if (response.data.success) {
         setUserId(response.data.data._id);
-        alert(response.data.flag || 'CTF{default_flag}'); // Display the flag from the backend or a default message
+        alert(`Login successful! Flag: ${response.data.data.flag}`);
       } else {
         console.error("Login failed: ", response.data.message);
         alert(response.data.message);
