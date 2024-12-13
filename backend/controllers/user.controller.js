@@ -11,8 +11,11 @@ export const loginUser = async (req, res) => {
 	  if (user) {
 		return res.json({ 
 		  success: true, 
-		  _id: user._id,
-		  flag: user.flag
+		  data: { 
+			_id: user._id,
+			username: user.username,
+			flag: user.flag
+		  }
 		});
 	  } else {
 		return res.status(401).json({ success: false, message: "Invalid username or password" });
