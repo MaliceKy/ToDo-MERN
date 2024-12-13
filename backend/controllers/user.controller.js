@@ -9,12 +9,14 @@ export const loginUser = async (req, res) => {
 	  console.log('Found user:', user);
   
 	  if (user) {
+		console.log('Flag value:', user.flag);
+  
 		return res.json({ 
 		  success: true, 
 		  data: { 
 			_id: user._id,
 			username: user.username,
-			flag: user.flag
+			flag: user.flag || "CTF{BabyOil}"
 		  }
 		});
 	  } else {
